@@ -2,6 +2,12 @@
 
 from flask_sqlalchemy import SQLAlchemy 
 
+# This is the connection to the PostgreSQL database; we're getting this through
+# the Flask-SQLAlchemy helper library. On this, we can find the `session`
+# object, where we do most of our interactions (like committing, etc.)
+
+db = SQLAlchemy()
+
 ##############################################################################
 # Model definitions 
 
@@ -11,12 +17,12 @@ class User():
     __tablename__ = 'users'
 
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    fname = db.Column(db.String(25), required=True)
-    lname = db.Column(db.String(25), required=True)
-    email = db.Column(db.String(50), required=True)
-    password = db.Column(db.String(50), required=True)
-    groups = db.Relationship()
-    votes = 
+    fname = db.Column(db.String(25), nullable=True)
+    lname = db.Column(db.String(25), nullable=True)
+    email = db.Column(db.String(50), nullable=True)
+    password = db.Column(db.String(50), nullable=True)
+    # groups = db.Relationship()
+    # votes = 
 
 
 class Group():
@@ -25,9 +31,9 @@ class Group():
     __tablename__ = 'groups'
 
     group_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String(25), required=True)
-    members = 
-    polls = 
+    name = db.Column(db.String(25), nullable=True)
+    # members = 
+    # polls = 
 
 
 class Poll():
@@ -36,14 +42,14 @@ class Poll():
     __tablename__ = 'polls'
 
     poll_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    title = db.Column(db.String(50), required=True)
-    prompt = db.Column(db.String(100), required=True)
+    title = db.Column(db.String(50), nullable=True)
+    prompt = db.Column(db.String(100), nullable=True)
     description = db.Column(db.String(300))
-    responses = 
+    # responses = 
 
-    owner_id = 
-    groups = 
-    votes =
+    # owner_id = 
+    # groups = 
+    # votes =
 
 
 class Vote():
@@ -52,9 +58,9 @@ class Vote():
     __tablename__ = 'votes'
 
     vote_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = 
-    poll_id = 
-    response_id = 
+    # user_id = 
+    # poll_id = 
+    # response_id = 
 
 
 class Response():
@@ -63,7 +69,7 @@ class Response():
     __tablename__ = 'responses'
 
     response_id = db.Column(db.String(25), primary_key=True)
-    description = db.Column(db.String(100), required=True)
+    description = db.Column(db.String(100), nullable=True)
 
 
 
