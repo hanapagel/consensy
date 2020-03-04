@@ -37,11 +37,34 @@ def add_user():
     return redirect('/login')
 
 
-@app.route('/<user_id>')
-def user_page(user_id):
+@app.route('/users/<user_id>')
+def display_user(user_id):
     """Display user landing page."""
 
     return render_template('user_page.html', user_id=user_id)
+
+
+@app.route('/polls/<poll_id>')
+def display_poll(poll_id):
+    """Display a poll."""
+
+    poll_id = 1
+
+    return render_template('poll.html', poll_id=poll_id)
+
+
+@app.route('/submit_vote')
+def submit_vote():
+    """This view will process a vote."""
+
+    pass
+
+
+@app.route('/display_results')
+def display_results():
+    """This view will process poll results."""
+
+    pass
 
 
 if __name__ == "__main__":
