@@ -1,5 +1,12 @@
+Wed 3/4
+	- Defined data classes
+	- Created virtual environment, installed dependencies, updated requirements.txt
+	- Started Trello board for tracking project to-dos
+	- Diagrammed user flow for MVP features
+	- Created skeleton server and routes for all MVP views
+
 Tues 3/3
-    - Determined project topic and MVP
-    - Created first draft of data model
-    - Initialized project repository
-    - Created first draft of README
+	- Determined project topic and MVP, discussed with Kay and Athelia
+	- Created first draft of data model, approved
+	- Initialized project repository
+	- Created first draft of README
