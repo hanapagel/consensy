@@ -20,6 +20,30 @@ def index():
     return render_template('homepage.html')
 
 
+@app.route('/login')
+def login():
+    """Validate user log-in, update session, and route to user homepage."""
+
+    user_id = 1
+
+    return redirect(f'/{user_id}')
+
+
+@app.route('/new_user')
+def add_user():
+    """Add a new user to user database with information provided. Send to user 
+       homepage via /login"""
+
+    return redirect('/login')
+
+
+@app.route('/<user_id>')
+def user_page(user_id):
+    """Display user landing page."""
+
+    return render_template('user_page.html', user_id=user_id)
+
+
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
     # point that we invoke the DebugToolbarExtension
