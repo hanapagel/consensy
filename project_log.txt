@@ -1,0 +1,5 @@
+Tues 3/3
+    - Determined project topic and MVP
+    - Created first draft of data model
+    - Initialized project repository
+    - Created first draft of README
