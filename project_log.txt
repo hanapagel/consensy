@@ -1,3 +1,7 @@
+Thurs 3/5
+	- Defined class relationships in model.py
+	- Defined functions for generating fake user and group data
+
 Wed 3/4
 	- Defined data classes
 	- Created virtual environment, installed dependencies, updated requirements.txt
