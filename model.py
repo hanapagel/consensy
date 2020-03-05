@@ -1,6 +1,6 @@
 # Data model and database functions
 
-from flask_sqlalchemy import SQLAlchemy 
+from flask_sqlalchemy import SQLAlchemy
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
@@ -9,7 +9,8 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 ##############################################################################
-# Model definitions 
+# Model definitions
+
 
 class User():
     """User of consensy website."""
@@ -21,8 +22,6 @@ class User():
     lname = db.Column(db.String(25), nullable=True)
     email = db.Column(db.String(50), nullable=True)
     password = db.Column(db.String(50), nullable=True)
-    # groups = db.Relationship()
-    # votes = 
 
 
 class Group():
@@ -32,8 +31,16 @@ class Group():
 
     group_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(25), nullable=True)
-    # members = 
-    # polls = 
+
+
+class UserGroup():
+    """Association table linking User and Group."""
+
+    __tablename__ = 'usergroup'
+
+    usergroup_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Relationship('User', backref='groups')
+    group_id = db.Relationship('Group', backref='members')
 
 
 class Poll():
@@ -45,11 +52,17 @@ class Poll():
     title = db.Column(db.String(50), nullable=True)
     prompt = db.Column(db.String(100), nullable=True)
     description = db.Column(db.String(300))
-    # responses = 
+    owner_id = db.Relationship('User', backref='admin')
 
-    # owner_id = 
-    # groups = 
-    # votes =
+
+class GroupPoll():
+    """Association table linking Group and Poll."""
+
+    __tablename__ = 'grouppoll'
+
+    grouppoll_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    group_id = db.Relationship('Group', backref='polls')
+    poll_id = db.Relationship('Poll', backref='groups')
 
 
 class Vote():
@@ -58,9 +71,9 @@ class Vote():
     __tablename__ = 'votes'
 
     vote_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    # user_id = 
-    # poll_id = 
-    # response_id = 
+    user = db.Relationship('User', backref='votes')
+    poll = db.Relationship('Poll', backref='votes')
+    response = db.Column(db.Integer, db.ForeignKey('responses.response_id'))
 
 
 class Response():
@@ -70,8 +83,6 @@ class Response():
 
     response_id = db.Column(db.String(25), primary_key=True)
     description = db.Column(db.String(100), nullable=True)
-
-
 
 
 ##############################################################################
