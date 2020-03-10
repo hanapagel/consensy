@@ -49,8 +49,10 @@ class UserGroup(db.Model):
     __tablename__ = 'usergroup'
 
     usergroup_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    user_id = db.relationship('User', backref='groups')
-    group_id = db.relationship('Group', backref='members')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.group_id'))
+    user = db.relationship('User', backref='groups')
+    group = db.relationship('Group', backref='members')
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -67,7 +69,8 @@ class Poll(db.Model):
     title = db.Column(db.String(50), nullable=False)
     prompt = db.Column(db.String(100), nullable=False)
     description = db.Column(db.String(300))
-    owner_id = db.relationship('User', backref='admin')
+    owner_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    owner = db.relationship('User', backref='admin')
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -81,8 +84,10 @@ class GroupPoll(db.Model):
     __tablename__ = 'grouppoll'
 
     grouppoll_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    group_id = db.relationship('Group', backref='polls')
-    poll_id = db.relationship('Poll', backref='groups')
+    group_id = db.Column(db.Integer, db.ForeignKey('groups.group_id'))
+    poll_id = db.Column(db.Integer, db.ForeignKey('polls.poll_id'))
+    group = db.relationship('Group', backref='polls')
+    poll = db.relationship('Poll', backref='groups')
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -96,6 +101,8 @@ class Vote(db.Model):
     __tablename__ = 'votes'
 
     vote_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    poll_id = db.Column(db.Integer, db.ForeignKey('polls.poll_id'))
     user = db.relationship('User', backref='votes')
     poll = db.relationship('Poll', backref='votes')
     response = db.Column(db.Integer, db.ForeignKey('responses.response_id'))
