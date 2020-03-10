@@ -1,3 +1,9 @@
+Tues 3/10
+	- Implemented create new user, login, logout features
+	- Corrected class relationships (added foreign keys)
+
+Week 1
+------
 Thurs 3/5
 	- Defined class relationships in model.py
 	- Defined functions for generating fake user and group data
