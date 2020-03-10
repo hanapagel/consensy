@@ -2,6 +2,26 @@
 
 {% block content %}
 
+<h2>Create an account</h2>
+
+<form action='/new_user' method='POST'>
+
+    <label for='first_name'>First name:</label>
+    <input type='text' id='first_name' name='first_name'><br>
+
+    <label for='last_name'>Last name:</label>
+    <input type='text' id='last_name' name='last_name'><br>
+
+    <label for='email'>Email:</label>
+    <input type='text' id='email' name='email'><br>
+
+    <label for='password'>Password:</label>
+    <input type='text' id='password' name='password'><br>
+
+    <input type='submit' value='Submit'>
+
+</form>
+
 <div> A log-in form will go here. It will route to '/login' for processing.
 </div>
 

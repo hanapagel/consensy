@@ -2,7 +2,7 @@
 
 from flask import Flask, render_template, redirect, request, flash, session
 from jinja2 import StrictUndefined
-from model import User, Group, Poll, Response, Vote, connect_to_db, connect_to_db
+from model import User, Group, Poll, Response, Vote, connect_to_db, db
 from flask_debugtoolbar import DebugToolbarExtension
 
 
@@ -20,21 +20,40 @@ def index():
     return render_template('homepage.html')
 
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
-    """Validate user log-in, update session, and route to user homepage."""
+    """Validate email & password, update session, and route to user homepage."""
 
     user_id = 1
 
     return redirect(f'/{user_id}')
 
 
-@app.route('/new_user')
+@app.route('/new_user', methods=['POST'])
 def add_user():
-    """Add a new user to user database with information provided. Send to user 
+    """Add a new user to user database with information provided. Send to user
        homepage via /login"""
 
-    return redirect('/login')
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    QUERY = User.query.filter_by(email=email).first()
+
+    if QUERY is None:
+        user = User(fname=first_name, lname=last_name, email=email,
+                    password=password)
+        db.session.add(user)
+        db.session.commit()
+
+        result = "User created"
+
+    else:
+        result = "User exists."
+
+    return f'{result}'
+    # return redirect('/login')
 
 
 @app.route('/users/<user_id>')
