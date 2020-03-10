@@ -18,6 +18,39 @@ def index():
     return render_template('homepage.html')
 
 
+@app.route('/new_user', methods=['POST'])
+def add_user():
+    """Add a new user to user database with information provided. Send to user
+       homepage via /login"""
+
+    first_name = request.form.get('first_name')
+    last_name = request.form.get('last_name')
+    email = request.form.get('email')
+    password = request.form.get('password')
+
+    QUERY = User.query.filter_by(email=email).first()
+
+    if QUERY is not None:
+        flash('User already exists. Please log-in.')
+        return redirect('/')
+
+    else:
+        # Add user to database.
+        user = User(fname=first_name, lname=last_name, email=email,
+                    password=password)
+        db.session.add(user)
+        db.session.commit()
+
+        # Update session dictionary.
+        session['current_user'] = {'user_id': user.user_id,
+                                   'email': user.email,
+                                   'password': user.password,
+                                   'first_name': user.fname,
+                                   'last_name': user.lname}
+
+        return redirect(f'/users/{user.user_id}')
+
+
 @app.route('/login', methods=['POST'])
 def login():
     """Validate email & password, update session, route to user homepage."""
@@ -52,31 +85,13 @@ def login():
     return redirect(f'/{QUERY.user_id}')
 
 
-@app.route('/new_user', methods=['POST'])
-def add_user():
-    """Add a new user to user database with information provided. Send to user
-       homepage via /login"""
+@app.route('/logout')
+def logout():
+    """Remove user data from session."""
 
-    first_name = request.form.get('first_name')
-    last_name = request.form.get('last_name')
-    email = request.form.get('email')
-    password = request.form.get('password')
+    del session['current_user']
 
-    QUERY = User.query.filter_by(email=email).first()
-
-    if QUERY is None:
-        user = User(fname=first_name, lname=last_name, email=email,
-                    password=password)
-        db.session.add(user)
-        db.session.commit()
-
-        result = "User created"
-
-    else:
-        result = "User exists."
-
-    return f'{result}'
-    # return redirect('/login')
+    return redirect('/')
 
 
 @app.route('/users/<user_id>')
