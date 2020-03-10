@@ -5,8 +5,6 @@ from jinja2 import StrictUndefined
 from model import User, Group, Poll, Response, Vote, connect_to_db, db
 from flask_debugtoolbar import DebugToolbarExtension
 
-
-
 app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
@@ -22,11 +20,36 @@ def index():
 
 @app.route('/login', methods=['POST'])
 def login():
-    """Validate email & password, update session, and route to user homepage."""
+    """Validate email & password, update session, route to user homepage."""
 
-    user_id = 1
+    email = request.form.get('email')
+    password = request.form.get('password')
 
-    return redirect(f'/{user_id}')
+    QUERY = User.query.filter_by(email=email).first()
+
+    # Verify user exists.
+    if QUERY is None:
+        flash('User does not exist.')
+
+    else:
+        # Verify password.
+        if QUERY.password == password:
+
+            # Update session dictionary.
+            session['current_user'] = {'user_id': QUERY.user_id,
+                                       'email': QUERY.email,
+                                       'password': QUERY.password,
+                                       'first_name': QUERY.fname,
+                                       'last_name': QUERY.lname}
+
+            flash('Login successful.')
+            return redirect(f'/users/{QUERY.user_id}')
+
+        else:
+            flash('Invalid password.')
+            return redirect('/login_form')
+
+    return redirect(f'/{QUERY.user_id}')
 
 
 @app.route('/new_user', methods=['POST'])

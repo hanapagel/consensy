@@ -9,4 +9,7 @@
 <div> Hello user, your id is {{user_id}}. Welcome to your page. 
 </div>
 
+<p>user_id: {{ session['current_user']['user_id'] }}</p>
+<p>user name: {{ session['current_user']['first_name']}} {{ session['current_user']['last_name']}}</p>
+
 {% endblock %}

@@ -18,14 +18,22 @@
     <label for='password'>Password:</label>
     <input type='text' id='password' name='password'><br>
 
-    <input type='submit' value='Submit'>
+    <input type='submit' value='Create'>
 
 </form>
 
-<div> A log-in form will go here. It will route to '/login' for processing.
-</div>
+<h2>Login</h2>
 
-<div> A new user form will go here. It will route to '/new_user' for processing.
-</div>
+<form action='/login' method='POST'>
+
+    <label for='email'>Email:</label>
+    <input type='text' id='email' name='email'><br>
+
+    <label for='password'>Password:</label>
+    <input type='text' id='password' name='password'><br>
+
+    <input type='submit' value='Login'>
+
+</form>
 
 {% endblock %}
