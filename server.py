@@ -120,16 +120,24 @@ def display_new_poll():
 def create_new_poll():
     """Process info from new_poll.html form and add to database."""
 
-    pass
+    title = request.form.get('title')
+    prompt = request.form.get('prompt')
+    description = request.form.get('description')
+
+    poll = Poll(title=title, prompt=prompt, description=description)
+    db.session.add(poll)
+    db.session.commit()
+
+    return redirect(f'poll/{poll.poll_id}')
 
 
-@app.route('/polls/<poll_id>')
+@app.route('/poll/<poll_id>')
 def display_poll(poll_id):
     """Display a poll."""
 
-    poll_id = 1
+    poll = Poll.query.get(poll_id)
 
-    return render_template('poll.html', poll_id=poll_id)
+    return render_template('poll.html', poll=poll)
 
 
 @app.route('/submit_vote')
