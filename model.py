@@ -105,7 +105,7 @@ class Vote(db.Model):
     poll_id = db.Column(db.Integer, db.ForeignKey('polls.poll_id'))
     user = db.relationship('User', backref='votes')
     poll = db.relationship('Poll', backref='votes')
-    response = db.Column(db.Integer, db.ForeignKey('responses.response_id'))
+    response = db.Column(db.String(3), db.ForeignKey('responses.response_id'))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -118,9 +118,9 @@ class Response(db.Model):
 
     __tablename__ = 'responses'
 
-    response_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    response_id = db.Column(db.String(3), primary_key=True)
     name = db.Column(db.String(25), nullable=False)
-    description = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.String(300), nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -140,7 +140,8 @@ def connect_to_db(app):
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
-    db.create_all()
+
+    print("* Connected to DB.")
 
 
 if __name__ == "__main__":
@@ -149,4 +150,3 @@ if __name__ == "__main__":
 
     from server import app
     connect_to_db(app)
-    print("Connected to DB.")
