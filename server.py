@@ -18,6 +18,10 @@ def index():
     return render_template('homepage.html')
 
 
+##############################################################################
+# Routes for managing users
+
+
 @app.route('/new_user', methods=['POST'])
 def add_user():
     """Add a new user to user database with information provided. Send to user
@@ -101,6 +105,24 @@ def display_user(user_id):
     return render_template('user_page.html', user_id=user_id)
 
 
+##############################################################################
+# Routes for managing polls and votes
+
+
+@app.route('/new_poll')
+def display_new_poll():
+    """Display form for creating a new poll."""
+
+    return render_template('new_poll.html')
+
+
+@app.route('/new_poll', methods=['POST'])
+def create_new_poll():
+    """Process info from new_poll.html form and add to database."""
+
+    pass
+
+
 @app.route('/polls/<poll_id>')
 def display_poll(poll_id):
     """Display a poll."""
@@ -123,6 +145,9 @@ def display_results():
 
     pass
 
+
+##############################################################################
+# App configuration
 
 if __name__ == "__main__":
     # We have to set debug=True here, since it has to be True at the
