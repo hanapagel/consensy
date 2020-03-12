@@ -140,11 +140,18 @@ def display_poll(poll_id):
     return render_template('poll.html', poll=poll)
 
 
-@app.route('/submit_vote')
-def submit_vote():
+@app.route('/poll/<poll_id>/submit_vote', methods=['POST'])
+def submit_vote(poll_id):
     """This view will process a vote."""
 
-    pass
+    response = request.form.get('response')
+    user_id = session['current_user']['user_id']
+    
+    vote = Vote(user_id=user_id, response=response, poll_id=poll_id)
+    db.session.add(vote)
+    db.session.commit()
+
+    return('You submitted your vote!')
 
 
 @app.route('/display_results')

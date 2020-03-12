@@ -2,13 +2,29 @@
 
 {% block content %}
 
-<h2>{{ poll.title }}.</h2>
-<p>Prompt: {{ poll.prompt }}</p><br>
+<h3>{{ poll.title }}.</h3>
 <p>Description: {{ poll.description }}</p><br>
+<p>Prompt: {{ poll.prompt }}</p><br>
 
-<h2>Future content:</h2>
-<div>Form for voting on poll.</div><br>
+<form action='/poll/{{ poll.poll_id }}/submit_vote', method='POST'>
 
+    <label for='agr'>Agree</label>
+    <input type='radio' id='agr' name='response' value='agr'>
+
+    <label for='rsv'>Reservations</label>
+    <input type='radio' id='rsv' name='response' value='rsv'>
+
+    <label for='asd'>Stand aside</label>
+    <input type='radio' id='asd' name='response' value='asd'>
+
+    <label for='blk'>Block</label>
+    <input type='radio' id='blk' name='response' value='blk'>
+
+    <input type='submit' value='Submit'>
+</form>
+
+
+<h3>Future content:</h3>
 <div>Display poll results.</div><br>
 
 {% endblock %}
