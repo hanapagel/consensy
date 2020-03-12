@@ -151,14 +151,18 @@ def submit_vote(poll_id):
     db.session.add(vote)
     db.session.commit()
 
-    return('You submitted your vote!')
+    return redirect(f'/poll/{poll_id}/results')
 
 
-@app.route('/display_results')
-def display_results():
-    """This view will process poll results."""
+@app.route('/poll/<poll_id>/results')
+def view_poll_results(poll_id):
+    """Display the results of a poll."""
 
-    pass
+    poll = Poll.query.get(poll_id)
+
+    results = poll.tally_results()
+
+    return render_template('poll_results.html', poll=poll, result=results)
 
 
 ##############################################################################

@@ -77,6 +77,25 @@ class Poll(db.Model):
 
         return f"<Poll poll_id={self.poll_id} {self.title}>"
 
+    def tally_results(self):
+        """Tally each vote by response. Return a dictionary."""
+
+        results = {'agr': 0,
+                   'rsv': 0,
+                   'asd': 0,
+                   'blk': 0}
+
+        print(f'Results initialized: {results}')
+
+        responses = ['agr', 'rsv', 'asd', 'blk']
+
+        for vote in self.votes:
+            for response in responses:
+                if vote.response == response:
+                    results[response] += 1
+
+        return results
+
 
 class GroupPoll(db.Model):
     """Association table linking Group and Poll."""
