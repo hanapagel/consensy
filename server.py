@@ -26,31 +26,19 @@ def index():
 def add_user():
     """Add a new user to user database with information provided. Send to user
        homepage via /login"""
-
-    first_name = request.form.get('first_name')
-    last_name = request.form.get('last_name')
-    email = request.form.get('email')
-    password = request.form.get('password')
-
-    QUERY = User.query.filter_by(email=email).first()
+    user_data = dict(request.form)
+    QUERY = User.query.filter_by(email=user_data.get('email')).first()
 
     if QUERY is not None:
         flash('User already exists. Please log-in.')
         return redirect('/')
-
     else:
         # Add user to database.
-        user = User(fname=first_name, lname=last_name, email=email,
-                    password=password)
-        db.session.add(user)
-        db.session.commit()
+        user = User(**user_data)
+        user.save()
 
         # Update session dictionary.
-        session['current_user'] = {'user_id': user.user_id,
-                                   'email': user.email,
-                                   'password': user.password,
-                                   'first_name': user.fname,
-                                   'last_name': user.lname}
+        session['current_user'] = {'user_id': user.user_id}
 
         return redirect(f'/users/{user.user_id}')
 
@@ -73,11 +61,7 @@ def login():
         if QUERY.password == password:
 
             # Update session dictionary.
-            session['current_user'] = {'user_id': QUERY.user_id,
-                                       'email': QUERY.email,
-                                       'password': QUERY.password,
-                                       'first_name': QUERY.fname,
-                                       'last_name': QUERY.lname}
+            session['current_user'] = {'user_id': QUERY.user_id}
 
             flash('Login successful.')
             return redirect(f'/users/{QUERY.user_id}')
@@ -119,14 +103,9 @@ def display_new_poll():
 @app.route('/new_poll', methods=['POST'])
 def create_new_poll():
     """Process info from new_poll.html form and add to database."""
-
-    title = request.form.get('title')
-    prompt = request.form.get('prompt')
-    description = request.form.get('description')
-
-    poll = Poll(title=title, prompt=prompt, description=description)
-    db.session.add(poll)
-    db.session.commit()
+    poll_data = dict(request.form)
+    poll = Poll(**poll_data)
+    poll.save()
 
     return redirect(f'poll/{poll.poll_id}')
 

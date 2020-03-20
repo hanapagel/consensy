@@ -8,11 +8,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 ##############################################################################
 # Model definitions
+class ModelMixin:
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
 
 
-class User(db.Model):
+class User(ModelMixin, db.Model):
     """User of consensy website."""
 
     __tablename__ = 'users'
@@ -29,7 +34,7 @@ class User(db.Model):
         return f"<User user_id={self.user_id} name={self.fname} {self.lname}>"
 
 
-class Group(db.Model):
+class Group(ModelMixin, db.Model):
     """Entity of affiliation between users."""
 
     __tablename__ = 'groups'
@@ -43,7 +48,7 @@ class Group(db.Model):
         return f"<Group group_id={self.group_id} name={self.name}>"
 
 
-class UserGroup(db.Model):
+class UserGroup(ModelMixin, db.Model):
     """Association table linking User and Group."""
 
     __tablename__ = 'usergroup'
@@ -60,7 +65,7 @@ class UserGroup(db.Model):
         return f"<UserGroup id={self.usergroup_id} user={self.user_id} group={self.group_id}>"
 
 
-class Poll(db.Model):
+class Poll(ModelMixin, db.Model):
     """Proposal or decision to be voted on."""
 
     __tablename__ = 'polls'
@@ -97,7 +102,7 @@ class Poll(db.Model):
         return results
 
 
-class GroupPoll(db.Model):
+class GroupPoll(ModelMixin, db.Model):
     """Association table linking Group and Poll."""
 
     __tablename__ = 'grouppoll'
@@ -114,7 +119,7 @@ class GroupPoll(db.Model):
         return f"<GroupPoll id={self.grouppoll_id} group={self.group_id} poll={self.poll_id}>"
 
 
-class Vote(db.Model):
+class Vote(ModelMixin, db.Model):
     """A response to a poll submitted by a user."""
 
     __tablename__ = 'votes'
@@ -132,7 +137,7 @@ class Vote(db.Model):
         return f"<Vote vote_id={self.vote_id}>"
 
 
-class Response(db.Model):
+class Response(ModelMixin, db.Model):
     """An expression of agreement or dissent used to respond to a poll."""
 
     __tablename__ = 'responses'

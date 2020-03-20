@@ -4,36 +4,42 @@
 
 <h2>Create an account</h2>
 
-<form action='/new_user' method='POST'>
+    {% if not session.get('current_user') %}
+        <h2>Login</h2>
 
-    <label for='first_name'>First name:</label>
-    <input type='text' id='first_name' name='first_name'><br>
+        <form action='/login' method='POST'>
 
-    <label for='last_name'>Last name:</label>
-    <input type='text' id='last_name' name='last_name'><br>
+            <label for='email'>Email:</label>
+            <input type='text' id='email' name='email'><br>
 
-    <label for='email'>Email:</label>
-    <input type='text' id='email' name='email'><br>
+            <label for='password'>Password:</label>
+            <input type='text' id='password' name='password'><br>
 
-    <label for='password'>Password:</label>
-    <input type='text' id='password' name='password'><br>
+            <input type='submit' value='Login'>
 
-    <input type='submit' value='Create'>
+        </form>
 
-</form>
+        <h2>Sign-up</h2>
 
-<h2>Login</h2>
+        <form action='/new_user' method='POST'>
 
-<form action='/login' method='POST'>
+            <label for='first_name'>First name:</label>
+            <input type='text' id='first_name' name='fname'><br>
 
-    <label for='email'>Email:</label>
-    <input type='text' id='email' name='email'><br>
+            <label for='last_name'>Last name:</label>
+            <input type='text' id='last_name' name='lname'><br>
 
-    <label for='password'>Password:</label>
-    <input type='text' id='password' name='password'><br>
+            <label for='email'>Email:</label>
+            <input type='text' id='email' name='email'><br>
 
-    <input type='submit' value='Login'>
+            <label for='password'>Password:</label>
+            <input type='text' id='password' name='password'><br>
 
-</form>
+            <input type='submit' value='Create'>
+
+        </form>
+    {% else %}
+        Welcome!
+    {% endif %}
 
 {% endblock %}
