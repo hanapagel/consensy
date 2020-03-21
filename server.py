@@ -15,6 +15,9 @@ app.secret_key = "ABC"
 def index():
     """Homepage."""
 
+    if 'current_user' in session:
+        return redirect(f'/users/{session["current_user"]["user_id"]}')
+
     return render_template('homepage.html')
 
 
