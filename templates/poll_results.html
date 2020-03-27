@@ -1,11 +1,65 @@
 {% extends 'base.html' %}
 
-{% block content %}
-<h2>Poll results</h2>
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
 
-<h3>{{ poll.title }}</h3>
-<p>{{ poll.prompt }}</p>
-<p>{{ result }}
+{% endblock %}
+
+{% block content %}
+    <h2>Poll results</h2>
+
+    <h3>{{ poll.title }}</h3>
+    <p>{{ poll.prompt }}</p>
+
+
+    <!-- Display poll results by response: -->
+    <table>
+        <tr>
+            <td>Agree:</td>
+            <td>{{ result['agr'] }}</td>
+        </tr>
+        <tr>
+            <td>Reservations:</td>
+            <td>{{ result['rsv'] }}</td>
+        </tr>
+        <tr>
+            <td>Stand aside:</td>
+            <td>{{ result['asd'] }}</td>
+        </tr>
+        <tr>
+            <td>Block:</td>
+            <td>{{ result['blk'] }}</td>
+        </tr>
+    </table>
+
+    <div>
+    <canvas id='pie-chart'></canvas>
+
+    <script>
+
+    $.get('/poll/results_chart', (res) => { 
+            console.log('Hello, this worked')
+        });
+
+        const resultsChart = new Chart(
+            $('#pie-chart'), {
+            
+                type: 'pie',
+              
+                data: { 
+
+                    labels: ['Agree', 'Reservations', 'Stand-aside', 'Block'],           
+                    datasets: [{
+                        label: 'Poll results',
+                        data: [5, 3, 2, 1],
+                        backgroundColor: ['green', 'yellow', 'orange', 'red'],
+
+                    }]
+                }
+            }
+        );
+    </script>
+    </div>
 
 {% endblock %}
 

@@ -6,6 +6,7 @@
 <p>Description: {{ poll.description }}</p><br>
 <p>Prompt: {{ poll.prompt }}</p><br>
 
+<!-- TODO: Refactor form in JS / JQuery -->
 <form action='/poll/{{ poll.poll_id }}/submit_vote', method='POST'>
 
     <label for='agr'>Agree</label>
@@ -24,7 +25,6 @@
 </form>
 
 
-<h3>Future content:</h3>
-<div>Display poll results.</div><br>
+<br><br>
 
 {% endblock %}

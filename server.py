@@ -1,6 +1,6 @@
 # Consensy core server
 
-from flask import Flask, render_template, redirect, request, flash, session
+from flask import Flask, render_template, redirect, request, flash, session, jsonify
 from jinja2 import StrictUndefined
 from model import User, Group, Poll, Response, Vote, connect_to_db, db
 from flask_debugtoolbar import DebugToolbarExtension
@@ -159,13 +159,24 @@ def submit_vote(poll_id):
 
 @app.route('/poll/<poll_id>/results')
 def view_poll_results(poll_id):
-    """Display the results of a poll."""
+    """Display the results of a poll as a table."""
 
     poll = Poll.query.get(poll_id)
 
     results = poll.tally_results()
 
     return render_template('poll_results.html', poll=poll, result=results)
+
+
+@app.route('/poll/results_chart')
+def view_poll_results_chart(poll_id):
+    """Display the results of a poll as a pie-chart."""
+
+    poll = Poll.query.get(poll_id)
+
+    results = poll.tally_results()
+
+    return jsonify(results)
 
 
 ##############################################################################
