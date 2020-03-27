@@ -168,7 +168,7 @@ def view_poll_results(poll_id):
     return render_template('poll_results.html', poll=poll, result=results)
 
 
-@app.route('/poll/results_chart')
+@app.route('/poll/<poll_id>/results_chart')
 def view_poll_results_chart(poll_id):
     """Display the results of a poll as a pie-chart."""
 
