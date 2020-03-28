@@ -37,8 +37,8 @@
 
     <script>
 
-    // $.get(('/poll/' + {{ poll.poll_id }} + '/results_chart'), (res) => {
-    $.get((`/poll/${poll.poll_id}/results_chart`), (res) => {
+    $.get(('/poll/' + {{ poll.poll_id }} + '/results_chart'), (res) => {
+    // $.get((`/poll/${poll.poll_id}/results_chart`), (res) => {
 
         const resultsChart = new Chart(        
 
@@ -59,12 +59,6 @@
         )
         });
     </script>
-    </div>
-
-    <div>
-        <script>
-            console.log({{ poll.poll_id }});
-        </script>
     </div>
 
 {% endblock %}
