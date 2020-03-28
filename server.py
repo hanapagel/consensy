@@ -15,7 +15,7 @@ app.secret_key = "ABC"
 def index():
     """Homepage."""
 
-    if 'current_user' in session:
+    if 'user_id' in session:
         return redirect(f'/my_homepage')
 
     return render_template('homepage.html')
@@ -49,11 +49,7 @@ def add_user():
         db.session.commit()
 
         # Update session dictionary.
-        session['current_user'] = {'user_id': user.user_id,
-                                   'email': user.email,
-                                   'password': user.password,
-                                   'first_name': user.fname,
-                                   'last_name': user.lname}
+        session['user_id'] = user.user_id
 
         return redirect('/my_homepage')
 
@@ -76,11 +72,7 @@ def login():
         if QUERY.password == password:
 
             # Update session dictionary.
-            session['current_user'] = {'user_id': QUERY.user_id,
-                                       'email': QUERY.email,
-                                       'password': QUERY.password,
-                                       'first_name': QUERY.fname,
-                                       'last_name': QUERY.lname}
+            session['user_id'] = QUERY.user_id
 
             flash('Login successful.')
             return redirect(f'/my_homepage')
@@ -97,7 +89,7 @@ def login():
 def logout():
     """Remove user data from session."""
 
-    del session['current_user']
+    del session['user_id']
 
     return redirect('/')
 
@@ -110,7 +102,7 @@ def logout():
 def display_user_homepage():
     """Display user homepage."""
 
-    user_id = session['current_user']['user_id']
+    user_id = session['user_id']
 
     user = User.query.get(user_id)
 
@@ -166,7 +158,7 @@ def submit_vote(poll_id):
     """This view will process a vote."""
 
     response = request.form.get('response')
-    user_id = session['current_user']['user_id']
+    user_id = session['user_id']
     
     vote = Vote(user_id=user_id, response=response, poll_id=poll_id)
     db.session.add(vote)
