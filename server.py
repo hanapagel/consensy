@@ -16,7 +16,7 @@ def index():
     """Homepage."""
 
     if 'current_user' in session:
-        return redirect(f'/users/{session["current_user"]["user_id"]}')
+        return redirect(f'/my_homepage')
 
     return render_template('homepage.html')
 
@@ -55,7 +55,7 @@ def add_user():
                                    'first_name': user.fname,
                                    'last_name': user.lname}
 
-        return redirect(f'/users/{user.user_id}')
+        return redirect('/my_homepage')
 
 
 @app.route('/login', methods=['POST'])
@@ -83,12 +83,13 @@ def login():
                                        'last_name': QUERY.lname}
 
             flash('Login successful.')
-            return redirect(f'/users/{QUERY.user_id}')
+            return redirect(f'/my_homepage')
 
         else:
             flash('Invalid password.')
             return redirect('/login_form')
 
+# TODO: What does this return statement do?
     return redirect(f'/{QUERY.user_id}')
 
 
@@ -105,11 +106,15 @@ def logout():
 # Routes for viewing polls and user homepage
 
 
-@app.route('/users/<user_id>')
-def display_user(user_id):
-    """Display user landing page."""
+@app.route('/my_homepage')
+def display_user_homepage():
+    """Display user homepage."""
 
-    return render_template('user_page.html', user_id=user_id)
+    user_id = session['current_user']['user_id']
+
+    user = User.query.get(user_id)
+
+    return render_template('user_page.html', user=user)
 
 
 @app.route('/all_polls')
