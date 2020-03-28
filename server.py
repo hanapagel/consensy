@@ -101,11 +101,24 @@ def logout():
     return redirect('/')
 
 
+##############################################################################
+# Routes for viewing polls and user homepage
+
+
 @app.route('/users/<user_id>')
 def display_user(user_id):
     """Display user landing page."""
 
     return render_template('user_page.html', user_id=user_id)
+
+
+@app.route('/all_polls')
+def display_all_polls():
+    """Route to display all polls in database."""
+
+    polls = Poll.query.all()
+
+    return render_template('all_polls.html', polls=polls)
 
 
 ##############################################################################

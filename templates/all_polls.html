@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<br>
+<h2>All Proposals</h2>
+    <div>Select below to view a proposal and submit your feedback.</div>
+
+    <br>
+
+    <ul>
+        {% for poll in polls %}
+        <li>
+            <a href="/poll/{{ poll.poll_id }}">
+              {{ poll.title }}
+            </a>
+
+        </li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
