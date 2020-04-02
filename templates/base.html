@@ -11,10 +11,31 @@
 
 </head>
 
-<body>
-<div>
-    CONSENSY | <a href='/new_poll'>New Proposal</a> | <a href='/all_polls'>All Proposals</a> | <a href='/my_homepage'>My Homepage</a> | <a href='/logout'>Logout</a>
-</div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <span class="navbar-text">
+	CONSENSY
+  </span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/all_polls">All Proposals</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/new_poll">New Proposal</a>
+      </li>
+      <li class="nav-item">
+		<a class="nav-link" href="/logout">Logout</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
   {% block content %} Hello world! {% endblock %}
 
 </body>
