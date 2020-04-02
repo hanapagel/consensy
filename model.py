@@ -96,6 +96,30 @@ class Poll(db.Model):
 
         return results
 
+    def outcome(self):
+        """Determine the outcome of the poll based on current responses."""
+
+        results = self.tally_results()
+
+        total_votes = sum(results.values())
+
+        outcomes = {1: {"name": "Consensus", "description": "You've reached consensus! Most users are in agreement with this proposal."}, 
+                    2: {"name": "In Progress", "description": "This proposal is on-track to reaching consensus. Some users express reservations or disagreement, but none object strongly."},
+                    3: {"name": "Blocked", "description": "This proposal has been blocked. One or more users have strong objections to this proposal in it's current form."}}
+
+
+        # Blocked
+        if results['blk'] > 0:
+            return outcomes[3]
+
+        # In Progress
+        elif results['agr']/total_votes < .60:
+            return outcomes[2]
+
+        # Consensus
+        elif results['agr']/total_votes >=.60:
+            return outcomes[1]
+
 
 class GroupPoll(db.Model):
     """Association table linking Group and Poll."""
@@ -145,6 +169,21 @@ class Response(db.Model):
         """Provide helpful representation when printed."""
 
         return f"<Response response_id={self.response_id}>"
+
+
+# class Outcome(db.Model):
+#     """The final result of the poll."""
+
+#     __tablename__ = 'outcomes'
+
+#     outcome_id - db.Column(db.Integer, primary_key-True)
+#     name = db.Column(db.String(25), nullable=False)
+#     description = db.Column(db.String(300), nullable=False)
+
+#     def __repr__(self):
+#         """Provide helpful representation when printed."""
+
+#         return f"<Outcome outcome_name={self.outcome_id}>"
 
 
 ##############################################################################

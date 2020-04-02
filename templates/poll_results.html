@@ -35,6 +35,25 @@
     <div>
     <canvas id='pie-chart'></canvas>
 
+    </div>
+
+    <div id="outcome">
+        <p id="outcome_name"></p>
+        <p id="outcome_description"></p> 
+    </div>
+
+    <script>
+
+    $.get(('/poll/' + {{ poll.poll_id }} + '/outcome'), (res) => {
+
+        console.log(res["name"], res["description"])
+
+        $('#outcome_name').append(res['name'])
+        $('#outcome_description').append(res['description'])
+    })
+
+    </script>
+
     <script>
 
     $.get(('/poll/' + {{ poll.poll_id }} + '/results_chart'), (res) => {
@@ -59,6 +78,7 @@
         )
         });
     </script>
+
     </div>
 
 {% endblock %}

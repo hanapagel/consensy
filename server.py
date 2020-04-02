@@ -189,6 +189,17 @@ def view_poll_results_chart(poll_id):
     return jsonify(results)
 
 
+@app.route('/poll/<poll_id>/outcome')
+def view_poll_outcome(poll_id):
+    """Display the outcome of a poll."""
+
+    poll = Poll.query.get(poll_id)
+
+    outcome = poll.outcome()
+
+    return jsonify(outcome)
+
+
 ##############################################################################
 # App configuration
 
