@@ -2,38 +2,42 @@
 
 {% block content %}
 
-<h2>Create an account</h2>
+<div class="container">
+  <div class="row">
 
-<form action='/new_user' method='POST'>
+    <div class="col">
+      <h2>Create an account</h2>
+      <form action="/new_user" method="POST">
+        <label for="first_name">First name:</label>
+        <input type="text" id="first_name" name="first_name"><br>
 
-    <label for='first_name'>First name:</label>
-    <input type='text' id='first_name' name='first_name'><br>
+        <label for="last_name">Last name:</label>
+        <input type="text" id="last_name" name="last_name"><br>
 
-    <label for='last_name'>Last name:</label>
-    <input type='text' id='last_name' name='last_name'><br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br>
 
-    <label for='email'>Email:</label>
-    <input type='text' id='email' name='email'><br>
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password"><br>
 
-    <label for='password'>Password:</label>
-    <input type='text' id='password' name='password'><br>
+        <input type="submit" value="Create">
+      </form>
+    </div>
 
-    <input type='submit' value='Create'>
+    <div class="col">
+      <h2>Login</h2>
+      <form action="/login" method="POST">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email"><br>
 
-</form>
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password"><br>
 
-<h2>Login</h2>
+        <input type="submit" value="Login">
+      </form>
+    </div>
 
-<form action='/login' method='POST'>
-
-    <label for='email'>Email:</label>
-    <input type='text' id='email' name='email'><br>
-
-    <label for='password'>Password:</label>
-    <input type='text' id='password' name='password'><br>
-
-    <input type='submit' value='Login'>
-
-</form>
+  </div>
+</div>
 
 {% endblock %}

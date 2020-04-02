@@ -2,22 +2,26 @@
 
 {% block content %}
 
-<h2>Create a new poll</h2>
+<div class="container">
+  <div class="row">
 
-<form action='/new_poll' method='POST'>
+	<div class="col">
+	  <h2>Create a new poll</h2>
+	  <form action="/new_poll" method="POST">
+	    <label for="title">Title:</label>
+	    <input type="text" id="title" name="title"><br>
 
-    <label for='title'>Title:</label>
-    <input type='text' id='title' name='title'><br>
+	    <label for="prompt">Prompt:</label>
+	    <input type="text" id="prompt" name="prompt"><br>
 
-    <label for='prompt'>Prompt:</label>
-    <input type='text' id='prompt' name='prompt'><br>
+	    <label for="description">Description:</label>
+	    <input type="text" id="description" name="description"><br>
 
-    <label for='description'>Description:</label>
-    <input type='text' id='description' name='description'><br>
+	    <input type="submit" value="Create">
+	  </form>
+	</div>
 
-    <input type='submit' value='Create'>
-
-</form>
-
+  </div>
+</div>
 
 {% endblock %}

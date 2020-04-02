@@ -1,85 +1,96 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block head %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
 
 {% endblock %}
 
 {% block content %}
-    <h2>Poll results</h2>
 
-    <h3>{{ poll.title }}</h3>
-    <p>{{ poll.prompt }}</p>
+<div class="container">
 
+  <div class="row">
+    <div class="col">
+      <h2>Poll results</h2>
 
-    <!-- Display poll results by response: -->
+      <h3>{{ poll.title }}</h3>
+      <p>{{ poll.prompt }}</p>
+    </div>
+  </div>
+
+<!-- Display poll results by response: -->
+
+  <div class="row">
+    <div class="col">
+
     <table>
-        <tr>
-            <td>Agree:</td>
-            <td>{{ result['agr'] }}</td>
-        </tr>
-        <tr>
-            <td>Reservations:</td>
-            <td>{{ result['rsv'] }}</td>
-        </tr>
-        <tr>
-            <td>Stand aside:</td>
-            <td>{{ result['asd'] }}</td>
-        </tr>
-        <tr>
-            <td>Block:</td>
-            <td>{{ result['blk'] }}</td>
-        </tr>
+      <tr>
+        <td>Agree:</td>
+        <td>{{ result["agr"] }}</td>
+      </tr>
+      <tr>
+        <td>Reservations:</td>
+        <td>{{ result["rsv"] }}</td>
+      </tr>
+      <tr>
+        <td>Stand aside:</td>
+        <td>{{ result["asd"] }}</td>
+      </tr>
+      <tr>
+        <td>Block:</td>
+        <td>{{ result["blk"] }}</td>
+      </tr>
     </table>
 
-    <div>
-    <canvas id='pie-chart'></canvas>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="col">
+    <canvas id="pie-chart"></canvas>
     </div>
 
-    <div id="outcome">
+    <div class ="col" id="outcome">
         <p id="outcome_name"></p>
         <p id="outcome_description"></p> 
     </div>
 
-    <script>
+  </div>
+</div>
 
-    $.get(('/poll/' + {{ poll.poll_id }} + '/outcome'), (res) => {
+<script>
 
-        console.log(res["name"], res["description"])
+$.get(('/poll/' + {{ poll.poll_id }} + '/outcome'), (res) => {
 
-        $('#outcome_name').append(res['name'])
-        $('#outcome_description').append(res['description'])
-    })
+    console.log(res['name'], res['description'])
 
-    </script>
+    $('#outcome_name').append(res['name'])
+    $('#outcome_description').append(res['description'])
+})
 
-    <script>
+$.get(('/poll/' + {{ poll.poll_id }} + '/results_chart'), (res) => {
 
-    $.get(('/poll/' + {{ poll.poll_id }} + '/results_chart'), (res) => {
-    // $.get((`/poll/${poll.poll_id}/results_chart`), (res) => {
+    const resultsChart = new Chart(
 
-        const resultsChart = new Chart(        
+        $('#pie-chart'), {
 
-            $('#pie-chart'), {
-            
-                type: 'pie',
-              
-                data: { 
+            type: 'pie',
 
-                    labels: ['Agree', 'Reservations', 'Stand-aside', 'Block'],           
-                    datasets: [{
-                        label: 'Poll results',
-                        data: [res['agr'], res['rsv'], res['asd'], res['blk']],
-                        backgroundColor: ['green', 'yellow', 'orange', 'red'],
-                    }]
-                }
+            data: {
+
+                labels: ['Agree', 'Reservations', 'Stand-aside', 'Block'],
+                datasets: [{
+                    label: 'Poll results',
+                    data: [res['agr'], res['rsv'], res['asd'], res['blk']],
+                    backgroundColor: ['green', 'yellow', 'orange', 'red'],
+                }]
             }
-        )
-        });
-    </script>
+        }
+    )
+});
 
-    </div>
+</script>
 
 {% endblock %}
 
