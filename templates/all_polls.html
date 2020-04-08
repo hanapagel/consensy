@@ -2,20 +2,23 @@
 
 {% block content %}
 <br>
-<h2>All Proposals</h2>
-    <div>Select below to view a proposal and submit your feedback.</div>
-
-    <br>
-
+<br>
+<div class="container"> 
+  <h2>All Proposals</h2>
+  <div class="row">
+    <div class="col">
+    <p>Select below to view a proposal and submit your feedback.</p>
     <ul>
-        {% for poll in polls %}
-        <li>
-            <a href="/poll/{{ poll.poll_id }}">
-              {{ poll.title }}
-            </a>
-
-        </li>
-        {% endfor %}
+      {% for poll in polls %}
+      <li>
+        <a href="/poll/{{ poll.poll_id }}">
+          {{ poll.title }}
+        </a>
+      </li>
+      {% endfor %}
     </ul>
+    </div>
+  </div>
+</div>
 
 {% endblock %}

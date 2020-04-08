@@ -6,35 +6,49 @@
   <div class="row">
 
     <div class="col">
-      <h2>Create an account</h2>
-      <form action="/new_user" method="POST">
-        <label for="first_name">First name:</label>
-        <input type="text" id="first_name" name="first_name"><br>
+      <h2>Consensy</h2>
+        <h3>A voting tool for making consensus-driven decisions.</h3>
 
-        <label for="last_name">Last name:</label>
-        <input type="text" id="last_name" name="last_name"><br>
+        <p>* Submit proposals</p>
+        <p>* Vote on a spectrum of agreement</p>
+        <p>* View results & outcome</p>
 
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email"><br>
-
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password"><br>
-
-        <input type="submit" value="Create">
-      </form>
     </div>
 
     <div class="col">
-      <h2>Login</h2>
-      <form action="/login" method="POST">
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email"><br>
 
-        <label for="password">Password:</label>
-        <input type="text" id="password" name="password"><br>
+      <div class="col">
+        <h2>Login</h2>
+        <form action="/login" method="POST">
+          <label for="email">Email:</label>
+          <input type="text" id="email" name="email"><br>
 
-        <input type="submit" value="Login">
-      </form>
+          <label for="password">Password:</label>
+          <input type="text" id="password" name="password"><br>
+
+          <input type="submit" value="Login">
+        </form>
+      </div>
+
+      <div class="col">
+        <h2>Create an account</h2>
+        <form action="/new_user" method="POST">
+          <label for="first_name">First name:</label>
+          <input type="text" id="first_name" name="first_name"><br>
+
+          <label for="last_name">Last name:</label>
+          <input type="text" id="last_name" name="last_name"><br>
+
+          <label for="email">Email:</label>
+          <input type="text" id="email" name="email"><br>
+
+          <label for="password">Password:</label>
+          <input type="text" id="password" name="password"><br>
+
+          <input type="submit" value="Create">
+        </form>
+      </div>    
+
     </div>
 
   </div>
