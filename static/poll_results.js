@@ -1,5 +1,4 @@
 
-// $.get(('/poll/' + {{ poll.poll_id }} + '/outcome'), (res) => {
 $.get((`/poll/${poll_id}/outcome`), (res) => {
 
     console.log(res['name'], res['description'])

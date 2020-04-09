@@ -167,17 +167,6 @@ def submit_vote(poll_id):
     return redirect(f'/poll/{poll_id}/results')
 
 
-@app.route('/poll/<poll_id>/results')
-def view_poll_results(poll_id):
-    """Display the results of a poll as a table."""
-
-    poll = Poll.query.get(poll_id)
-
-    results = poll.tally_results()
-
-    return render_template('poll_results.html', poll=poll, result=results)
-
-
 @app.route('/poll/<poll_id>/results_chart')
 def view_poll_results_chart(poll_id):
     """Display the results of a poll as a pie-chart."""
@@ -198,6 +187,17 @@ def view_poll_outcome(poll_id):
     outcome = poll.outcome()
 
     return jsonify(outcome)
+
+
+@app.route('/poll/<poll_id>/results')
+def view_poll_results(poll_id):
+    """Display the results of a poll as a table."""
+
+    poll = Poll.query.get(poll_id)
+
+    results = poll.tally_results()
+
+    return render_template('poll_results.html', poll=poll, result=results)
 
 
 ##############################################################################

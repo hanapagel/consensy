@@ -2,28 +2,42 @@
 
 {% block content %}
 
-<h3>{{ poll.title }}.</h3>
-<p>Description: {{ poll.description }}</p><br>
-<p>Prompt: {{ poll.prompt }}</p><br>
+<br>
+<div class="container">
+	<div class="row">
+		<div class="column">
+			<h3>{{ poll.title }}.</h3><br>
+			<p>DESCRIPTION:</p>
+			<p>{{ poll.description }}</p><br>
+			<p>PROMPT:</p>
+			<p>{{ poll.prompt }}</p><br>
 
-<!-- TODO: Refactor form in JS / JQuery -->
-<form action='/poll/{{ poll.poll_id }}/submit_vote', method='POST'>
+		</div>
+	</div>
 
-    <label for='agr'>Agree</label>
-    <input type='radio' id='agr' name='response' value='agr'>
+	<div class="row">
+		<div class="column">
+			<!-- TODO: Refactor form in JS / JQuery -->
+			<form action='/poll/{{ poll.poll_id }}/submit_vote', method='POST'>
 
-    <label for='rsv'>Reservations</label>
-    <input type='radio' id='rsv' name='response' value='rsv'>
+			    <input type='radio' id='agr' name='response' value='agr'>
+			    <label for='agr'>Agree</label><br>
 
-    <label for='asd'>Stand aside</label>
-    <input type='radio' id='asd' name='response' value='asd'>
+			    <input type='radio' id='rsv' name='response' value='rsv'>
+			    <label for='rsv'>Reservations</label><br>
 
-    <label for='blk'>Block</label>
-    <input type='radio' id='blk' name='response' value='blk'>
 
-    <input type='submit' value='Submit'>
-</form>
+			    <input type='radio' id='asd' name='response' value='asd'>
+			    <label for='asd'>Stand aside</label><br>
 
+			    <input type='radio' id='blk' name='response' value='blk'>
+			    <label for='blk'>Block</label><br>
+
+			    <input type='submit' value='Submit'>
+			</form>
+		</div>
+	</div>
+</div>
 
 <br><br>
 

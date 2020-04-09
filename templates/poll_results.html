@@ -8,20 +8,22 @@
 
 {% block content %}
 
+<br>
 <div class="container">
+    <div class="row">
+        <div class="column">
+            <h3>{{ poll.title }}.</h3><br>
+            <p>DESCRIPTION:</p>
+            <p>{{ poll.description }}</p><br>
+            <p>PROMPT:</p>
+            <p>{{ poll.prompt }}</p><br>
 
-  <div class="row">
-    <div class="col">
-      <h2>Poll results</h2>
-
-      <h3>{{ poll.title }}</h3>
-      <p>{{ poll.prompt }}</p>
+        </div>
     </div>
-  </div>
 
 <!-- Display poll results by response: -->
 
-  <div class="row">
+ <!--  <div class="row">
     <div class="col">
 
     <table>
@@ -44,7 +46,7 @@
     </table>
 
     </div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="col">
